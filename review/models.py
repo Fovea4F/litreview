@@ -31,6 +31,7 @@ class UserFollows(models.Model):
     # Your UserFollows model definition goes here
     user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
         related_name='following'
         )
     followed_user = models.ForeignKey(
