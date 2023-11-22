@@ -13,9 +13,11 @@
                 <button type="submit" >S’inscrire</button>
             </form>
         </div>
-        <form action="{% url 'login' %}" method="post">
-            {% csrf_token %}
-            <button type="submit" >Retourner</button>
-        </form>
+        <div class='column'>
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" >Retourner</button>
+            </form>
+        </div>
     </div>
 {% endblock content %}

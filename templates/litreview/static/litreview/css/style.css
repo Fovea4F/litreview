@@ -1,5 +1,5 @@
 /* CSS pour le bandeau */
-header {
+.header {
     background-color: #337ab7; /* Couleur du bandeau */
     color: white; /* Couleur du texte */
     padding: 20px;
