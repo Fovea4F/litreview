@@ -3,25 +3,23 @@
     <head>
         <title>LITReview</title>
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    </head>
+    </head> 
     <body>
         <header>
-            <div class=navbar>
-                <div class=navbar-title>
+            <div class=banner>
+                <div class=title>
                     <h1>LITReview</h1>
                 </div>
-                <div class=logout-link>
+                <div class=banner-link>
                     {% if user.is_authenticated %}
-                        <a href="{% url 'logout' %}">Déconnexion</a>
+                        <a href="{% url 'home' %}">Flux</a>
+                        <a href="{% url 'home' %}">Posts</a>
+                        <a href="{% url 'logout' %}">Abonnement</a>
+                        <a href="{% url 'logout' %}">Déconnecter ({{ request.user }})</a>
                     {% endif %}
                 </div>
             </div>
         </header>
         {% block content %}
         {% endblock content %}
-        {% if user.is_authenticated %}
-            <p>Vous êtes connecté en tant que {{ request.user }}. <a href="{% url 'logout' %}">Se déconnecter</a>
-            </p>
-        {% endif %}
-    </body>
 </html>

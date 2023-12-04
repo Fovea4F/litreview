@@ -1,4 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
-    <p>Vous êtes connecté !</p>
+    <div class="grid-container">
+        {% if user.is_authenticated %}
+            <p><button onclick="window.location.href='{% url 'ticket_create' %}'" >Créer un Ticket</button></p>
+            <p><button onclick="window.location.href='{% url 'review_ticket_create' %}'" >Créer une Critique</button></p>
+        {% endif %}
+        <div class="post">
+            {% for element in tickets_and_review %}
+                <div>
+                    <h4 class='auteur'> Ticket - Auteur({{ element.0.user }}) </h4>
+                    <p>{{ element.0.title }}</p>
+                    <p><img src="{{ element.0.image.url }}"></p>
+
+                    <!--<a href= "{% url 'ticket_edit' element.0.id %}" >{{ element.0.title }}</a>-->
+                    <p>{{ element.1.headline }}</p>
+                </div>
+               
+            {% endfor %}
+        </div>
+    </div>
 {% endblock content %}
