@@ -34,11 +34,13 @@ urlpatterns = [
         template_name='authentication/password_change_done.html'), name='password_change_done'),
 
     path("home/", review.views.home, name='home'),
+    path("post/", review.views.post, name='post'),
     path('ticket/create', review.views.ticket_create, name='ticket_create'),
-    path('ticket/<int:ticket_id>/', review.views.ticket_edit, name='ticket_edit'),
+    path('ticket/<int:ticket_id>/edit/', review.views.ticket_edit, name='ticket_edit'),
+    path('ticket/<int:ticket_id>/edit/', review.views.review_and_ticket_edit, name='ticket_review_edit'),
+    path('ticket/<int:ticket_id>/delete/', review.views.ticket_delete, name='ticket_delete'),
     path('review/create', review.views.review_and_ticket_create, name='review_ticket_create'),
-    path('ticket/<int:ticket_id>/', review.views.review_and_ticket_edit, name='ticket_review_edit'),
-    path('review/<int:review_id>/', review.views.review_edit, name='review_edit'),
+    path('review/<int:review_id>/edit/', review.views.review_edit, name='review_edit'),
 ]
 
 if settings.DEBUG:

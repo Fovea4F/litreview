@@ -7,13 +7,22 @@ User = get_user_model()
 
 
 class TicketForm(forms.ModelForm):
+    edit_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True)
+    # Permet l'insertion d'un champ caché servant de discriminant
+
     class Meta:
         model = models.Ticket
         fields = ['title', 'description', 'image']
 
 
+class DeleteTicketForm(forms.Form):
+    delete_ticket = forms.BooleanField(initial=True)
+    # Permet l'insertion d'un champ caché servant de discriminant
+
+
 class ReviewForm(forms.ModelForm):
     edit_review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
+    # Permet l'insertion d'un champ caché servant de discriminant
 
     class Meta:
         model = models.Review
@@ -22,7 +31,4 @@ class ReviewForm(forms.ModelForm):
 
 class DeleteReviewForm(forms.Form):
     delete_review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
-
-
-class DeleteTicketForm(forms.Form):
-    delete_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True)
+    # Permet l'insertion d'un champ caché servant de discriminant

@@ -1,6 +1,4 @@
-from itertools import chain
 from django.db.models import Q
-from django.db.models import CharField, Value
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from . import forms, models
@@ -18,18 +16,38 @@ def home1(request):
 
 @login_required
 def home(request):
+    tickets = models.Ticket.objects.filter(user=request.user).order_by("time_created")  # most recent before
+    tickets_and_review = []
+    for ticket in tickets:
+        reviews = ticket.review_set.all()
+        print(f'Ticket : {ticket}')
+        print(f'Critique : {reviews}')
+        for review in reviews:
+            if review == 'Null':
+                tickets_and_review.append((ticket, ''))
+            tickets_and_review.append((ticket, review))
+    context = {
+        'tickets_and_review': tickets_and_review
+        }
+    return render(request, 'review/home.html', context)
+
+
+@login_required
+def post(request):
     '''print('la méthode de requête est : ', request.method)
     print('les données POST sont : ', request.POST)'''
     tickets = models.Ticket.objects.filter(user=request.user)
     tickets_and_review = []
     for ticket in tickets:
         reviews = ticket.review_set.all()
+        print(f'Ticket : {ticket}')
+        print(f'Critique : {reviews}')
         for review in reviews:
             tickets_and_review.append((ticket, review))
     context = {
         'tickets_and_review': tickets_and_review
         }
-    return render(request, 'review/home.html', context)
+    return render(request, 'review/post.html', context)
 
 
 @login_required
@@ -68,17 +86,31 @@ def ticket_edit(request, ticket_id):
             edit_form = forms.TicketForm(request.POST, instance=ticket)
             if edit_form.is_valid():
                 edit_form.save()
-                return redirect('home')
-        if 'delete_ticket' in request.POST:
-            delete_form = forms.DeleteTicketForm(request.POST)
-            if delete_form.is_valid():
-                ticket.delete()
-                return redirect('home')
+                return redirect('post')
     context = {
         'edit_form': edit_form,
         'delete_form': delete_form,
         }
-    return render(request, 'review/ticket_edit.html', context=context)
+
+    return render(request, 'review/ticket_edit.html', context)
+
+
+@login_required
+def ticket_delete(request, ticket_id):
+    ticket = get_object_or_404(models.Ticket, id=ticket_id)
+    delete_form = forms.DeleteTicketForm()
+    edit_form = forms.TicketForm(instance=ticket)
+    if request.method == 'POST':
+        if 'delete_ticket' in request.POST:
+            delete_form = forms.DeleteTicketForm(request.POST)
+            if delete_form.is_valid():
+                ticket.delete()
+                return redirect('post')
+    context = {
+        'edit_form': edit_form,
+        'delete_form': delete_form,
+        }
+    return render(request, 'review/ticket_delete.html', context=context)
 
 
 @login_required

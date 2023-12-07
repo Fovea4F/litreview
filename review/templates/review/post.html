@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for element in tickets_and_review %}
+    <div class="main-container">
+        <div class="flux">
+            <div class="head-post">
+                <span>
+                    <h4>Vous avez publié une critique</h4>
+                </span>
+                <span>
+                    <div class="date">
+                        {{ element.1.time_created }}
+                    </div>
+                </span>
+            </div>
+            <div class="review">
+                <p class="headline">{{ element.1.headline }} - {{ element.1.rating }}</p>
+                <p>{{ element.1.body }}</p>
+            </div>
+            <div class="ticket">
+                <div class="auteur">
+                    <h4 > Ticket - ({{ element.0.user }}) </h4>
+                    <p>{{ element.0.title }}</p>
+                    <div class image_container>
+                        <img class="image" src="{{ element.0.image.url }}" alt="">
+                    </div>
+                </div>
+            </div>
+            {% csrf_token %}
+            <div class="post-button">
+                <form action="{% url 'ticket_edit' element.0.id %}" method='post'>
+                    {% csrf_token %}
+                    <button type="submit">Modifier</button></form>
+                <form action="{% url 'ticket_delete' element.0.id %}" method='post'>
+                    {% csrf_token %}
+                    <button type="submit">Supprimer</button></form>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+{% endblock content %}
+
+
+<label for="id_delete_ticket">Supprimer le ticket ?&nbsp;:</label>
+<input type="checkbox" name="delete_ticket" required="" id="id_delete_ticket" checked="">
+
+
+  
+
