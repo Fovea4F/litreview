@@ -6,6 +6,7 @@ User = get_user_model()
 
 
 class TicketForm(forms.ModelForm):
+    # -----------------------------------------------------
     # edit_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True)
     # Permet l'insertion d'un champ 'edit_ticket' caché afin de montrer que le formulaire proposé est en édition
     # Il sert de discriminant
