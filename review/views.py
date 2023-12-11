@@ -34,26 +34,16 @@ def home(request):
 
 @login_required
 def post(request):
-    '''print('la méthode de requête est : ', request.method)
-    print('les données POST sont : ', request.POST)'''
-    tickets = models.Ticket.objects.filter(user=request.user)
+    tickets = models.Ticket.objects.filter(user=request.user).order_by("time_created")
     tickets_and_review = []
     for ticket in tickets:
         reviews = ticket.review_set.all()
-        print(f'Ticket : {ticket}')
-        print(f'Critique : {reviews}')
         for review in reviews:
             tickets_and_review.append((ticket, review))
     context = {
         'tickets_and_review': tickets_and_review
         }
     return render(request, 'review/post.html', context)
-
-
-@login_required
-def view_review(request, review_id):
-    review = get_object_or_404(models.Review, id=review_id)
-    return render(request, 'review/review_view.html', {'review': review})
 
 
 @login_required
@@ -114,6 +104,12 @@ def ticket_delete(request, ticket_id):
 
 
 @login_required
+def review_view(request, review_id):
+    review = get_object_or_404(models.Review, id=review_id)
+    return render(request, 'review/review_view.html', {'review': review})
+
+
+@login_required
 def review_edit(request, review_id):
     review = get_object_or_404(models.Review, id=review_id)
     edit_form = forms.ReviewForm(instance=review)
@@ -160,30 +156,29 @@ def review_create(request):
 
 
 @login_required
-def review_and_ticket_edit(request):
-    ticket_form = forms.TicketForm()
-    review_form = forms.ReviewForm()
+def review_ticket_edit(request, ticket_id):
+    ticket = models.Ticket.objects.get(id=ticket_id)
+    review = ticket.review_set.first()
     if request.method == 'POST':
-        ticket_form = forms.TicketForm(request.POST, request.FILES)
-        review_form = forms.ReviewForm(request.POST, )
+        ticket_form = forms.TicketForm(request.POST, instance=ticket)
+        review_form = forms.ReviewForm(instance=review)
         if all([review_form.is_valid(), ticket_form.is_valid()]):
             ticket = ticket_form.save(commit=False)
             ticket.user = request.user
             ticket.save()
             review = review_form.save(commit=False)
             review.user = request.user
-            review.ticket = ticket
             review.save()
-            return redirect('home')
+            return redirect('post')
     context = {
-        'review_form': review_form,
         'ticket_form': ticket_form,
-    }
-    return render(request, 'review/ticket_review_post_edit.html', context=context)
+        'review_form': review_form,
+        }
+    return render(request, 'review/review_ticket_edit.html', context=context)
 
 
 @login_required
-def review_and_ticket_create(request):
+def review_ticket_create(request):
     ticket_form = forms.TicketForm()
     review_form = forms.ReviewForm()
     if request.method == 'POST':

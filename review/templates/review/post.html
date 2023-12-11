@@ -22,14 +22,20 @@
                 <div class="auteur">
                     <h4 > Ticket - ({{ element.0.user }}) </h4>
                     <p>{{ element.0.title }}</p>
-                    <div class image_container>
+                    <div class="image-container">
                         <img class="image" src="{{ element.0.image.url }}" alt="">
+                        <div class="description">
+                            <h2>Description :</h2>
+                            <p>
+                                {{ element.0.description }}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
             {% csrf_token %}
             <div class="post-button">
-                <form action="{% url 'ticket_edit' element.0.id %}" method='post'>
+                <form action="{% url 'review_ticket_edit' element.0.id %}" method='post'>
                     {% csrf_token %}
                     <button type="submit">Modifier</button></form>
                 <form action="{% url 'ticket_delete' element.0.id %}" method='post'>

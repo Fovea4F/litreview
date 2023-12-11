@@ -13,6 +13,7 @@ class User(AbstractUser):
         (SUBSCRIBER, 'Abonné'),
     )
     role = models.CharField(max_length=30, choices=ROLE_CHOICES, verbose_name='Rôle')
+    follows = models.ManyToManyField('self', symmetrical=False, verbose_name='Personnes suivies')
 
 
 class UserFollows(models.Model):

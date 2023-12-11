@@ -1,3 +1,6 @@
+# The line `from django.conf import settings` is importing the `settings` module from the Django
+# configuration. The `settings` module contains various settings and configurations for the Django
+# project, such as database settings, installed apps, static files configuration, etc.
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
@@ -33,10 +36,10 @@ def signup_page(request):
             user = form.save()
             login(request, user)
             return redirect(settings.LOGIN_REDIRECT_URL)
-    return render(request, 'authentication/signup2.html',
-                  context={'form': form})
+    return render(request, 'authentication/signup.html', context={'form': form})
 
 
+@login_required
 def logout_page(request):
     logout(request)
     return redirect('login')
@@ -55,3 +58,16 @@ def profile_photo_update(request):
             form.save()
             return redirect('home')
     return render(request, 'authentication/profile_photo_update.html', context={'form': form})
+
+
+@login_required
+def follow_users(request):
+
+    follow_form = forms.UserFollowsForm(instance=request.user)
+    if request.method == 'POST':
+        follow_form = forms.UserFollowsForm(request.POST, instance=request.user)
+        if follow_form.is_valid():
+            follow_form.save()
+            return redirect('home')
+    context = {'follow_form': follow_form}
+    return render(request, 'authentication/follow_user.html', context)
