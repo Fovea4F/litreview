@@ -38,7 +38,7 @@
                 <form action="{% url 'review_ticket_edit' element.0.id %}" method='post'>
                     {% csrf_token %}
                     <button type="submit">Modifier</button></form>
-                <form action="{% url 'ticket_delete' element.0.id %}" method='post'>
+                <form action="{% url 'review_ticket_delete' element.0.id %}" method='post'>
                     {% csrf_token %}
                     <button type="submit">Supprimer</button></form>
             </div>

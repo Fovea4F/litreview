@@ -12,7 +12,7 @@ class Ticket(models.Model):
     title = models.CharField(max_length=128, verbose_name='Titre', null=False, blank=False)
     description = models.TextField(max_length=2048, null=False, blank=False, verbose_name='Description')
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    image = models.ImageField(blank=False, verbose_name='Image')
+    image = models.ImageField(verbose_name='Image')
     time_created = models.DateTimeField(auto_now=True)
 
     def resize_image(self):
