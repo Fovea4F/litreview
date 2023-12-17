@@ -2,3 +2,6 @@ venv
 *.pyc
 db.sqlite3
 livrables
+.gitignore
+.history
+.vscode
