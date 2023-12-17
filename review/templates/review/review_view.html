@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
+
 {% block content %}
     <h2>{{ Review.title }}</h2>
     <p><a href="{% url 'review_edit' review.id %}" >Modifier la critique</a></p>

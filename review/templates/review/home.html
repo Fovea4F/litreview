@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
+
 {% block content %}
     <div class="flux-button-container">
         {% if user.is_authenticated %}
@@ -8,23 +10,37 @@
             </p>
         {% endif %}
     </div>
+    
     {% for element in tickets_and_review %}
         <div class="main-container">
             <div class="flux">
-                <div class="head-post">
-                    <span>
-                        <h4>Vous avez publié une critique</h4>
-                    </span>
-                    <span>
-                        <div class="date">
-                            {{ element.1.time_created }}
+                {% if element.1 != '' %}
+                    <div class="head-post">
+                        <span>
+                            <h4>Vous avez publié une critique</h4>
+                        </span>
+                        <span>
+                            <div class="date">
+                                {{ element.1.time_created }}
+                            </div>
+                        </span>
+                    </div>
+                    <div class="review">
+                        <p class="headline">{{ element.1.headline }}
+                            <span class="stars"> {{ element.1.rating|convert_to_stars_filter }} </span>
+                        </p>
+                        <p class="headline">{{ element.1.body }}
+                    </div>
+                    {% else %}
+                        <div class="head-post">
+                            <div class="review">
+                                <span>
+                                    <h4>Vous pouvez ajouter une critique !</h4>
+                                </span>
+                            </div>
                         </div>
-                    </span>
-                </div>
-                <div class="review">
-                    <p class="headline">{{ element.1.headline }} - {{ element.1.rating }}</p>
-                    <p>{{ element.1.body }}</p>
-                </div>
+                {% endif %}
+
                 <div class="ticket">
                     <div class="auteur">
                         <h4 > 

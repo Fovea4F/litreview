@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
 {% block content %}
     <h2>Modifier la critique</h2>
     <form method="post">
@@ -6,7 +7,6 @@
         {% csrf_token %}
         <button type="submit" >Sauvegarder</button>
     </form>
-    {% endblock content %}
     <hr>
     <h2>Supprimer la critique ?</h2>
     <form method="post">
@@ -14,3 +14,4 @@
         {% csrf_token %}
         <button type="submit" >Supprimer</button>
     </form>
+{% endblock content %}

@@ -57,6 +57,12 @@ html, body {
     width: 98vw;
     justify-content: center;
     padding: 2px;
+    button {
+        margin-top: 5px;
+        form > input {
+        align-content: space-between;
+        }
+    }
 }
 
 .post a:visited{
@@ -102,11 +108,21 @@ html, body {
     justify-content: space-between;
 }
 
+.head-post span {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+
 .main-container {
     margin-top: 20px;
     margin-bottom:10px;
     display: flex;
     justify-content: center;
+    h2 {
+        text-align: center;
+    }
 }
 
 .flux {
@@ -118,6 +134,7 @@ html, body {
 .flux > image {
     float: left;
     margin-left: 10px;
+
 }
 
 .flux-button-container {
@@ -145,10 +162,15 @@ html, body {
     margin: 20px;
 }
 
-.review .headline{
+.review {
     font-size: x-large ;
 }
 
+.headline {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
 
 .date {
     text-align: right;
@@ -167,14 +189,16 @@ html, body {
     text-align: left;
 }
 
-.auteur p {
+.auteur > p {
     font-size: x-large;
+    font-weight: bold;
 }
 
 .post-button {
-    text-align: right;
     display: flex;
     justify-content: right;
+    margin: 5px;
+    
 }
 
 .post-button button {
@@ -197,20 +221,16 @@ html, body {
 
 .image-container {
     display: flex;
-}
-
-.image-container image {
-    flex: 1;
-    margin-right: 20px;
-}
-
-.image-container div.description {
-    flex : 3;
-    margin-left: 20px;
-}
-
-.image-container img {
-    width: 200px;
+    img {
+        width: 200px;
+    }
+    div {
+        margin-left: 20px;
+        h2 {
+            text-align: left;
+            margin-top: 0px;
+        }
+    }
 }
 
 .subscription {
@@ -223,5 +243,34 @@ html, body {
     p {
         display: flex;
         justify-content: center;
+    }
+}
+
+.edit_button {
+    display: flex;
+    button {
+        align-content: space-between;
+        margin-top: 5px;
+        margin-right: 20px;
+    }
+}
+
+.review_title {
+    display: flex;
+    align-items: center;
+}
+
+.stars {
+    color: green;
+    display: flex;
+    margin-right: 700px;
+    font-size: xx-large;
+
+}
+
+.description {
+    font-size: medium;
+    p {
+        font-size: xx-large;
     }
 }

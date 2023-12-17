@@ -6,11 +6,10 @@ User = get_user_model()
 
 
 class TicketForm(forms.ModelForm):
-    edit_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
     class Meta:
         model = models.Ticket
-        fields = ['user', 'title', 'image', 'description']
+        fields = ['user', 'title', 'description', 'image']
 
 
 class DeleteTicketForm(forms.Form):
